@@ -80,7 +80,7 @@ module.exports = {
     title: `gUFO to HTML`,
     description: `gUFO to HTML `,
     author: `@ontouml`,
-    siteUrl: 'https://ontouml.github.io/gufo2html',
+    siteUrl: 'https://ontouml.github.io/gufo2html/',
   },
   plugins,
 }

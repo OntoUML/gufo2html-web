@@ -1,6 +1,7 @@
 import React, { useEffect, useCallback, useState } from 'react'
 import { getPrefixesFromTTL } from '@utils/prefixes'
 import { GUFO2HTML } from 'ontouml-js'
+import SEO from '@layout/SEO'
 import FileLoader from './components/FileLoader'
 
 const IndexTemplate = () => {
@@ -33,10 +34,15 @@ const IndexTemplate = () => {
     setOntology(ontology)
   }, [])
 
-  return documentation ? (
-    <div dangerouslySetInnerHTML={{ __html: documentation }} />
-  ) : (
-    <FileLoader onFileLoad={onFileLoad} />
+  return (
+    <>
+      <SEO title="gUFO to HTML | OntoUML" />
+      {documentation ? (
+        <div dangerouslySetInnerHTML={{ __html: documentation }} />
+      ) : (
+        <FileLoader onFileLoad={onFileLoad} />
+      )}
+    </>
   )
 }
 
