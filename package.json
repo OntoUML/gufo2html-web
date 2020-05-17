@@ -6,7 +6,7 @@
   "author": "OntoUML Org.",
   "scripts": {
     "start": "npm-run-all -p prettier:watch stylelint:watch develop",
-    "build": "rm -rf ./docs && mkdir docs && gatsby build",
+    "build": "gatsby build",
     "develop": "gatsby develop -H 0.0.0.0",
     "prettier:watch": "onchange \"**/*.{js,ts,tsx,json,md,mdx}\" -- prettier --write {{changed}}",
     "stylelint:watch": "onchange '**/styled.tsx' -- stylelint --fix {{changed}}",
