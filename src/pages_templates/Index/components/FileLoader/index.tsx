@@ -43,7 +43,7 @@ const FileReader: React.FC<Props> = ({ onFileLoad }) => {
                 gUFO to HTML
               </Typography>
               <Typography variant="subtitle1" align="center">
-                Upload a .ttl file to get start
+                Upload a .ttl file to get started
               </Typography>
             </Grid>
             <Grid item={true} xs={12}>

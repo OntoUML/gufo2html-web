@@ -1,6 +1,5 @@
 import React, { useEffect, useCallback, useState } from 'react'
-import { getPrefixesFromTTL } from '@utils/prefixes'
-import { GUFO2HTML } from 'ontouml-js'
+import { transformGUFO2HTML } from 'gufo2html'
 import SEO from '@layout/SEO'
 import FileLoader from './components/FileLoader'
 
@@ -11,12 +10,8 @@ const IndexTemplate = () => {
   useEffect(() => {
     ;(async () => {
       if (ontology) {
-        const gufo2html = new GUFO2HTML()
-        const prefixes = getPrefixesFromTTL(ontology)
-
-        const htmlResult = await gufo2html.generateHTML(ontology, prefixes, {
+        const { html } = await transformGUFO2HTML(ontology, {
           format: 'Turtle',
-          baseIRI: prefixes[''] || 'https://ontouml.org',
           documentationProps: {
             title: 'Ontology',
             description: [],
@@ -25,7 +20,7 @@ const IndexTemplate = () => {
           },
         })
 
-        setDocumentation(htmlResult)
+        setDocumentation(html)
       }
     })()
   }, [ontology])
