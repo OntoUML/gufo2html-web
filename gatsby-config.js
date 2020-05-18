@@ -28,6 +28,7 @@ const plugins = [
     options: {
       alias: {
         '@components': 'src/components',
+        '@context': 'src/context',
         '@layout': 'src/layout',
         '@templates': 'src/pages_templates',
         '@styles': 'src/styles',

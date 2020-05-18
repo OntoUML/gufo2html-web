@@ -3,10 +3,11 @@ import Button from '@material-ui/core/Button'
 import CloudUploadIcon from '@material-ui/icons/CloudUpload'
 
 type Props = {
+  label?: string
   onLoad: (ontology: string) => void
 }
 
-const FileLoader: React.FC<Props> = ({ onLoad }) => {
+const FileLoader: React.FC<Props> = ({ label = 'Upload File', onLoad }) => {
   const onFileChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e && e.target && e.target.files) {
       const file = e.target.files[0]
@@ -32,7 +33,7 @@ const FileLoader: React.FC<Props> = ({ onLoad }) => {
       fullWidth={true}
       startIcon={<CloudUploadIcon />}
     >
-      Upload File
+      {label}
       <input
         type="file"
         accept=".ttl"
