@@ -6,4 +6,9 @@ export const FormContainer = styled.div`
   min-height: 100vh;
   padding: 5rem;
   width: 50vw;
+
+  ${({ theme }) => theme.breakpoints.down('sm')} {
+    padding: 1rem 1rem 5rem;
+    width: 100vw;
+  }
 `

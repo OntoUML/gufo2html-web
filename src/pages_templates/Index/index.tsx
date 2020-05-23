@@ -1,5 +1,7 @@
 import React, { useEffect, useCallback, useState, useRef } from 'react'
 import { transformGUFO2HTML } from 'gufo2html'
+import { Theme } from '@material-ui/core/styles/createMuiTheme'
+import useMediaQuery from '@material-ui/core/useMediaQuery'
 import { DocOptions } from 'gufo2html/dist/types'
 import SEO from '@layout/SEO'
 import { DocOptionsContext } from '@context/doc_options'
@@ -9,14 +11,25 @@ import Preview from './components/Preview'
 import * as S from './styled'
 
 const IndexTemplate = () => {
+  const mobile = useMediaQuery((theme: Theme) => theme.breakpoints.down('sm'))
   const htmlInputFileRef = useRef<HTMLInputElement>(null)
+  const [previewOpened, setPreviewOpened] = useState(false)
+  const [namespaceLoaded, setNamespaceLoaded] = useState(false)
   const [docOptions, setDocOptions] = useState<DocOptions>({
     baseIRI: '',
     format: 'Turtle',
     documentationProps: {
       title: 'Ontology',
       description: [''],
-      theme: {},
+      theme: {
+        colors: {
+          background: '#ffffff',
+          border: '#dddddd',
+          title: '#005a9c',
+          text: '#212121',
+          link: '#005a9c',
+        },
+      },
       customPartials: {},
     },
   })
@@ -26,7 +39,22 @@ const IndexTemplate = () => {
   useEffect(() => {
     ;(async () => {
       if (ontology) {
-        const { html } = await transformGUFO2HTML(ontology, docOptions)
+        const { html, prefixes } = await transformGUFO2HTML(
+          ontology,
+          docOptions
+        )
+
+        if (
+          prefixes[''] &&
+          prefixes[''] !== docOptions.baseIRI &&
+          !namespaceLoaded
+        ) {
+          setNamespaceLoaded(true)
+          setDocOptions({
+            ...docOptions,
+            baseIRI: prefixes[''],
+          })
+        }
 
         setDocumentation(html)
       }
@@ -60,17 +88,31 @@ const IndexTemplate = () => {
     }))
   }, [])
 
+  const onTogglePreview = useCallback(() => {
+    setPreviewOpened(prev => !prev)
+  }, [])
+
   return (
     <DocOptionsContext.Provider value={{ docOptions, updateDocOptions }}>
-      <SEO title="gUFO to HTML | OntoUML" />
+      <SEO title="gUFO to HTML" />
       {documentation ? (
         <>
           <DocPropsForm
             onDownloadClick={onDownloadClick}
             onFileLoad={onFileLoad}
           />
-          <Preview documentation={documentation} />
+          <Preview opened={previewOpened} documentation={documentation} />
           <S.HTMLInputFile ref={htmlInputFileRef} />
+          {mobile && (
+            <S.PreviewButton
+              variant="contained"
+              size="large"
+              fullWidth={true}
+              onClick={onTogglePreview}
+            >
+              Toggle Preview
+            </S.PreviewButton>
+          )}
         </>
       ) : (
         <FileLoader onFileLoad={onFileLoad} />

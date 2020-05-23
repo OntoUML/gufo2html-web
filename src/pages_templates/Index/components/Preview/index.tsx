@@ -3,9 +3,10 @@ import * as S from './styled'
 
 type Props = {
   documentation: string
+  opened: boolean
 }
 
-const Preview: React.FC<Props> = ({ documentation }) => {
+const Preview: React.FC<Props> = ({ documentation, opened }) => {
   const contentRef = useRef<HTMLIFrameElement>(null)
 
   useEffect(() => {
@@ -35,7 +36,7 @@ const Preview: React.FC<Props> = ({ documentation }) => {
     }
   }, [contentRef, documentation])
 
-  return <S.PreviewContainer ref={contentRef} />
+  return <S.PreviewContainer opened={opened} ref={contentRef} />
 }
 
 export default Preview
