@@ -1,13 +1,16 @@
-import React from 'react'
+import React, { useCallback } from 'react'
 import { useStaticQuery, graphql } from 'gatsby'
+import { DocOptions } from 'gufo2html/dist/types'
 import Grid from '@material-ui/core/Grid'
 import CardContent from '@material-ui/core/CardContent'
 import Typography from '@material-ui/core/Typography'
+import Button from '@material-ui/core/Button'
 import FileButton from '@components/FileButton'
+import example from '../../example'
 import * as S from './styled'
 
 type Props = {
-  onFileLoad: (ontology: string) => void
+  onFileLoad: (ontology: string, docOptions?: DocOptions) => void
 }
 
 const FileReader: React.FC<Props> = ({ onFileLoad }) => {
@@ -22,6 +25,15 @@ const FileReader: React.FC<Props> = ({ onFileLoad }) => {
       }
     }
   `)
+
+  const onExampleClick = useCallback(() => {
+    onFileLoad(example, {
+      documentationProps: {
+        title: 'AlpineBits',
+        description: ['Here is some description'],
+      },
+    })
+  }, [])
 
   return (
     <S.Container>
@@ -48,6 +60,11 @@ const FileReader: React.FC<Props> = ({ onFileLoad }) => {
             </Grid>
             <Grid item={true} xs={12}>
               <FileButton onLoad={onFileLoad} />
+            </Grid>
+            <Grid item={true} xs={12}>
+              <Button fullWidth={true} onClick={onExampleClick}>
+                or click here to see an example
+              </Button>
             </Grid>
           </Grid>
         </CardContent>

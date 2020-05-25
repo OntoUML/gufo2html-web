@@ -79,7 +79,7 @@ if (process.env.NODE_ENV === 'production') {
 module.exports = {
   siteMetadata: {
     title: `OntoUML`,
-    description: `An online platform to transform gUFO files to HTML`,
+    description: `Online platform to generate HTML from gUFO files`,
     author: `@ontouml`,
     siteUrl: 'https://gufo2html.netlify.app/',
   },

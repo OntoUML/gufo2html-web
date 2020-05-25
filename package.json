@@ -39,6 +39,7 @@
     "gatsby-source-filesystem": "^2.1.52",
     "gatsby-transformer-sharp": "^2.3.18",
     "gufo2html": "0.0.1-alpha.2",
+    "nprogress": "^0.2.0",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
     "react-final-form": "^6.3.5",
